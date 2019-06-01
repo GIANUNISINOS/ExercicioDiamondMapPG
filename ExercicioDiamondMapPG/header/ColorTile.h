@@ -244,7 +244,7 @@ public:
 
                 //diamond map
                 float xi = row * (tileWidth/2.0f) + col * (tileWidth/2.0f);
-                float yi = row * (tileHeight/2.0f) - col * (tileHeight/2.0f) + sum_heigth/2.0f - (tileHeight/2.0f);
+                float yi = (row-1) * (tileHeight/2.0f) - col * (tileHeight/2.0f) + sum_heigth/2.0f;
 
                 modelMatrix = glm::mat4(1);
                 modelMatrix = glm::translate(modelMatrix, glm::vec3(xi, yi, 0.0));
