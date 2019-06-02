@@ -97,9 +97,17 @@ public:
     }
 
     void testCliqueMouse(double xPos,double yPos) {
+        //slide map
+        //int rowClick = (int) (yPos / (tileHeight/2.0));
+        //int columnClick = (int) ((xPos - (rowClick * (tileWidth/2.0)))/tileWidth);
 
-        int rowClick = (int) (yPos / (tileHeight/2.0));
-        int columnClick = (int) ((xPos - (rowClick * (tileWidth/2.0)))/tileWidth);
+        //diamond map projecao do click
+
+
+
+        // Project click over tilemap
+        int columnClick = (((2 * xPos / tileWidth) + (2 * yPos / tileHeight)) / 2) - ((numCols/2) + 0.5);
+        int rowClick = (-2 * yPos / tileHeight + columnClick) + (numRows + 0.5);
 
         float x0 = ((float)columnClick)*tileWidth  + ((float)rowClick) *(tileWidth/2.0f) ;
         float y0 = ((float)rowClick)*tileHeight/2.0f ;
@@ -146,7 +154,7 @@ public:
             printf("\nrightPointX x %f",Dx);
             printf("\nrightPointY y %f\n",Dy);
         }
-
+/*
         if(xPos < Bx){
             //testar lado da esquerda
             if(DEBUG==1) printf("\nlado esquerda");
@@ -179,7 +187,8 @@ public:
             }
 
         }
-
+*/
+        isClickValid=true;
         if(isClickValid==true){
             if(matrixColors[rowClick][columnClick].isVisible){
                 if (matrixColors[rowClick][columnClick].isSelected) {
@@ -244,7 +253,7 @@ public:
 
                 //diamond map
                 float xi = row * (tileWidth/2.0f) + col * (tileWidth/2.0f);
-                float yi = (row-1) * (tileHeight/2.0f) - col * (tileHeight/2.0f) + sum_heigth/2.0f;
+                float yi = (row/*-1*/) * (tileHeight/2.0f) - col * (tileHeight/2.0f) + sum_heigth/2.0f;
 
                 modelMatrix = glm::mat4(1);
                 modelMatrix = glm::translate(modelMatrix, glm::vec3(xi, yi, 0.0));
