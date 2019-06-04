@@ -102,12 +102,25 @@ public:
         //int columnClick = (int) ((xPos - (rowClick * (tileWidth/2.0)))/tileWidth);
 
         //diamond map projecao do click
+        //int columnClick = (((2 * xPos / tileWidth) + (2 * yPos / tileHeight)) / 2)- ((numCols/2) + 0.5);
+        //int rowClick = (-2 * yPos / tileHeight + columnClick) + (numRows + 0.5);
 
 
+        float tw2 = tileWidth*2.0f;
+        float th2 = tileHeight*2.0f;
 
-        // Project click over tilemap
-        int columnClick = (((2 * xPos / tileWidth) + (2 * yPos / tileHeight)) / 2) - ((numCols/2) + 0.5);
-        int rowClick = (-2 * yPos / tileHeight + columnClick) + (numRows + 0.5);
+        //sor 1
+        //int columnClick =(   (  (xPos/tw2) +(yPos/th2)  )/2.0f    ) + 0.5f;
+        //int rowClick = ((xPos-columnClick*tw2)/tw2) + 0.5f;
+
+        //sor 2
+        int columnClick = ((2.0f *  (float)xPos / (float)tileWidth) + (2.0f * (yPos-(sum_heigth/2.0f)) / (float)tileHeight)) / 2.0f;
+        int rowClick = (-2.0f * (yPos-(sum_heigth/2.0f)) / (float)tileHeight + columnClick) + 0.5f;
+
+        //int rowClick = (xPos / (4.0f *tileWidth)) - (yPos / (4.0f *tileHeight)) ;
+        //int columnClick = 0;
+
+
 
         float x0 = ((float)columnClick)*tileWidth  + ((float)rowClick) *(tileWidth/2.0f) ;
         float y0 = ((float)rowClick)*tileHeight/2.0f ;
