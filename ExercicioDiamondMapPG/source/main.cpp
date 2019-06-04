@@ -30,8 +30,8 @@ const int WIDTH = ROWS*TILE_WIDTH;
 const int HEIGHT = COLS*TILE_HEIGHT;
 
 //Atributos janela
-int RESIZED_WIDTH = 800;
-int RESIZED_HEIGHT = 600;
+int RESIZED_WIDTH = ROWS*TILE_WIDTH;
+int RESIZED_HEIGHT = COLS*TILE_HEIGHT;
 
 //teclas pressionadas
 int keys[1024];
