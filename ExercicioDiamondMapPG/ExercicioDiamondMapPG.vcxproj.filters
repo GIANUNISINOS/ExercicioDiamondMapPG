@@ -10,17 +10,11 @@
     <ClInclude Include="header\stb_image.h">
       <Filter>headers</Filter>
     </ClInclude>
-    <ClInclude Include="header\GameObject.h">
-      <Filter>headers</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h" />
     <ClInclude Include="header\SpriteSheet.h">
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="header\VerticesObject.h">
-      <Filter>headers</Filter>
-    </ClInclude>
-    <ClInclude Include="header\Layer.h">
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="header\Texture.h">
@@ -35,6 +29,9 @@
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="header\Tileset.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="header\ColorTile.h">
       <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>

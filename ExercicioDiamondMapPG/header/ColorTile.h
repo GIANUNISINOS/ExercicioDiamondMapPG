@@ -114,8 +114,11 @@ public:
         //int rowClick = ((xPos-columnClick*tw2)/tw2) + 0.5f;
 
         //sor 2
-        int columnClick = ((2.0f *  (float)xPos / (float)tileWidth) + (2.0f * (yPos-(sum_heigth/2.0f)) / (float)tileHeight)) / 2.0f;
-        int rowClick = (-2.0f * (yPos-(sum_heigth/2.0f)) / (float)tileHeight + columnClick) + 0.5f;
+        //int columnClick = ((2.0f *  (float)xPos / (float)tileWidth) + (2.0f * (yPos-(sum_heigth/2.0f)) / (float)tileHeight)) / 2.0f;
+        //int rowClick = (-2.0f * (yPos-(sum_heigth/2.0f)) / (float)tileHeight + columnClick) + 0.5f;
+
+		int rowClick = (((2 * (yPos-sum_heigth/2.0) / tileHeight) + (2 * xPos / tileWidth))) / 2;
+		int columnClick = (2 * xPos / tileWidth) - rowClick;
 
         //int rowClick = (xPos / (4.0f *tileWidth)) - (yPos / (4.0f *tileHeight)) ;
         //int columnClick = 0;
