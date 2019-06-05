@@ -207,7 +207,10 @@ public:
 
         }
 */
-        isClickValid=true;
+
+        if(testPointCollision(Ax,Ay, Bx, By,  Cx, Cy, xPos, yPos))
+            isClickValid=true;
+
         if(isClickValid==true){
             if(matrixColors[rowClick][columnClick].isVisible){
                 if (matrixColors[rowClick][columnClick].isSelected) {
