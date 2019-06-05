@@ -110,12 +110,14 @@ public:
         double row = (((2.0 * y / th) + (2.0 * xPos / tw))) / 2.0;
         double col = (2.0 * xPos / tw) - row;
 
-        //int rowClick = (int) row;
-        //int columnClick = (int) col;
+        int rowClick = (int) row;
+        int columnClick = (int) col;
 
-        int rowClick = (int) round(row);
-        int columnClick = (int) round(col);
+//        int rowClick = (int) round(row);
+//        int columnClick = (int) round(col);
 
+        if(rowClick<0 || columnClick<0 || columnClick>=numCols || rowClick>=numRows)
+            return;
 
         //slide map
         //float x0 = ((float)columnClick)*tileWidth  + ((float)rowClick) *(tileWidth/2.0f) ;
