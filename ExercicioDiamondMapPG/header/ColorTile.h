@@ -103,6 +103,7 @@ public:
 
         //diamond map projecao do click
 
+
         double x = (double)xPos;
         double y = ((double)yPos)- (((double)sum_heigth)/2.0);
         double tw = (double)tileWidth;
@@ -116,8 +117,10 @@ public:
 //        int rowClick = (int) round(row);
 //        int columnClick = (int) round(col);
 
+
         if(rowClick<0 || columnClick<0 || columnClick>=numCols || rowClick>=numRows)
             return;
+
 
         //slide map
         //float x0 = ((float)columnClick)*tileWidth  + ((float)rowClick) *(tileWidth/2.0f) ;
@@ -126,7 +129,6 @@ public:
         //diamond
         float x0 = (float)(rowClick * (tileWidth/2.0f) + columnClick * (tileWidth/2.0f));
         float y0 = (float)((rowClick-1) * (tileHeight/2.0f) - columnClick * (tileHeight/2.0f) + sum_heigth/2.0f);
-
 
 
         //   _______B_______
