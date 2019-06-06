@@ -278,52 +278,69 @@ public:
     void do_a_movement(int a) {
         if (a == DIRECTION_NO) {
             if (this->lastTileSelectedRow > 0) {
-                markAsTrueLastTileSelected(false);
+                markLastTileSelected(false);
                 this->lastTileSelectedRow = this->lastTileSelectedRow - 1;
                 this->lastTileSelectedCol = this->lastTileSelectedCol;
-                markAsTrueLastTileSelected(true);
+                markLastTileSelected(true);
             }
-        } 
-		else if (a == DIRECTION_SE) {
+        }
+        else if (a == DIRECTION_SE) {
             if (this->lastTileSelectedRow > -1 && this->lastTileSelectedRow < (numRows - 1)) {
-                markAsTrueLastTileSelected(false);
+                markLastTileSelected(false);
                 this->lastTileSelectedRow = this->lastTileSelectedRow + 1;
                 this->lastTileSelectedCol = this->lastTileSelectedCol;
-                markAsTrueLastTileSelected(true);
+                markLastTileSelected(true);
             }
-        } 
+        }
+        else if (a == DIRECTION_NE) {
+            if (this->lastTileSelectedCol > -1 && this->lastTileSelectedCol < (numCols - 1)) {
+                markLastTileSelected(false);
+                this->lastTileSelectedRow = this->lastTileSelectedRow;
+                this->lastTileSelectedCol = this->lastTileSelectedCol + 1;
+                markLastTileSelected(true);
+            }
+        }
+        else if (a == DIRECTION_SO) {
+            if (this->lastTileSelectedCol > 0) {
+                markLastTileSelected(false);
+                this->lastTileSelectedRow = this->lastTileSelectedRow;
+                this->lastTileSelectedCol = this->lastTileSelectedCol- 1;
+                markLastTileSelected(true);
+            }
+        }
 		else if (a == DIRECTION_S) {
             if (this->lastTileSelectedCol > 0 && this->lastTileSelectedRow < (numRows - 1)) {
-                markAsTrueLastTileSelected(false);
+                markLastTileSelected(false);
                 this->lastTileSelectedRow = this->lastTileSelectedRow + 1;
                 this->lastTileSelectedCol = this->lastTileSelectedCol - 1;
-                markAsTrueLastTileSelected(true);
+                markLastTileSelected(true);
             }
         } 
 		else if (a == DIRECTION_N) {
             if (this->lastTileSelectedCol < (numCols - 1) && this->lastTileSelectedRow > 0) {
-                markAsTrueLastTileSelected(false);
+                markLastTileSelected(false);
                 this->lastTileSelectedRow = this->lastTileSelectedRow - 1;
                 this->lastTileSelectedCol = this->lastTileSelectedCol + 1;
-                markAsTrueLastTileSelected(true);
+                markLastTileSelected(true);
             }
         }
 		else if (a == DIRECTION_O) {
             if (this->lastTileSelectedCol > 0 && this->lastTileSelectedRow > 0) {
-                markAsTrueLastTileSelected(false);
+                markLastTileSelected(false);
                 this->lastTileSelectedRow = this->lastTileSelectedRow - 1;
                 this->lastTileSelectedCol = this->lastTileSelectedCol - 1;
-				markAsTrueLastTileSelected(true);
+                markLastTileSelected(true);
             }
         }
-		else if (a == DIRECTION_E) {
+        else if (a == DIRECTION_E) {
             if (this->lastTileSelectedRow < (numRows - 1) && this->lastTileSelectedCol < (numCols - 1) && this->lastTileSelectedRow > -1) {
-                markAsTrueLastTileSelected(false);
+                markLastTileSelected(false);
                 this->lastTileSelectedRow = this->lastTileSelectedRow + 1;
                 this->lastTileSelectedCol = this->lastTileSelectedCol + 1;
-                markAsTrueLastTileSelected(true);
+                markLastTileSelected(true);
             }
         }
+
     }
 
 
