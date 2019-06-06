@@ -1,5 +1,14 @@
 #define DEBUG 1
 
+#define DIRECTION_NO 1
+#define DIRECTION_O 2
+#define DIRECTION_SO 3
+#define DIRECTION_N 4
+#define DIRECTION_S 5
+#define DIRECTION_NE 6
+#define DIRECTION_E 7
+#define DIRECTION_SE 8
+
 class Tile {
 public:
     glm::vec3 colorsRGB;
@@ -231,20 +240,39 @@ public:
       Função que responde às teclas pressionadas
   */
     void keyboard_reaction(int keys[1024]) {
-
-        if (keys[GLFW_KEY_UP] == 1) {
-            do_a_movement('e');
-        } else if (keys[GLFW_KEY_DOWN] == 1) {
-            do_a_movement('w');
-        } else if (keys[GLFW_KEY_LEFT] == 1) {
-            do_a_movement('n');
-        } else if (keys[GLFW_KEY_RIGHT] == 1) {
-            do_a_movement('s');
+		
+		//e==NO   r==N    t==NE
+ 		//d==O            g==E
+		//c==SO   v==S    b==SE
+		
+        if (keys[GLFW_KEY_R] == 1) {
+            do_a_movement(DIRECTION_N);
+        } 
+		else if (keys[GLFW_KEY_V] == 1) {
+            do_a_movement(DIRECTION_S);
+        } 
+		else if (keys[GLFW_KEY_G] == 1) {
+            do_a_movement(DIRECTION_E);
+        } 
+		else if (keys[GLFW_KEY_D] == 1) {
+            do_a_movement(DIRECTION_O);
+        } 
+		else if (keys[GLFW_KEY_B] == 1) {
+            do_a_movement(DIRECTION_SE);
+        } 
+		else if (keys[GLFW_KEY_E] == 1) {
+            do_a_movement(DIRECTION_NO);
         }
-    }
+		else if (keys[GLFW_KEY_T] == 1) {
+            do_a_movement(DIRECTION_NE);
+        } 
+		else if (keys[GLFW_KEY_C] == 1) {
+            do_a_movement(DIRECTION_SO);
+        } 
+	}
 
-    void do_a_movement(char a) {
-        if (a == 'n') {
+    void do_a_movement(int a) {
+        if (a == DIRECTION_NO) {
             if (this->lastTileSelectedRow > 0) {
                 this->matrixColors[this->lastTileSelectedRow][this->lastTileSelectedCol].isSelected = false;
 
@@ -253,8 +281,8 @@ public:
 
                 this->matrixColors[this->lastTileSelectedRow][this->lastTileSelectedCol].isSelected = true;
             }
-        } else if (a == 's') {
-            if (this->lastTileSelectedRow < (numRows - 1)) {
+        } else if (a == DIRECTION_SE) {
+            if (this->lastTileSelectedRow > -1 && this->lastTileSelectedRow < (numRows - 1)) {
                 this->matrixColors[this->lastTileSelectedRow][this->lastTileSelectedCol].isSelected = false;
 
                 this->lastTileSelectedRow = this->lastTileSelectedRow + 1;
@@ -262,7 +290,7 @@ public:
 
                 this->matrixColors[this->lastTileSelectedRow][this->lastTileSelectedCol].isSelected = true;
             }
-        } else if (a == 'w') {
+        } else if (a == DIRECTION_S) {
             if (this->lastTileSelectedCol > 0 && this->lastTileSelectedRow < (numRows - 1)) {
                 this->matrixColors[this->lastTileSelectedRow][this->lastTileSelectedCol].isSelected = false;
 
@@ -271,7 +299,7 @@ public:
 
                 this->matrixColors[this->lastTileSelectedRow][this->lastTileSelectedCol].isSelected = true;
             }
-        } else if (a == 'e') {
+        } else if (a == DIRECTION_N) {
             if (this->lastTileSelectedCol < (numCols - 1) && this->lastTileSelectedRow > 0) {
                 this->matrixColors[this->lastTileSelectedRow][this->lastTileSelectedCol].isSelected = false;
 
