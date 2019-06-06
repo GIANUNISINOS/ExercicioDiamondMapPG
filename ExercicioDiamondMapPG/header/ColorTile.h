@@ -223,11 +223,69 @@ public:
         float betha = acos(normalACx * normalAPx + normalACy * normalAPy);
 
        // bool collide = alpha == (theta + betha);
-        bool collide = 0.01>abs(alpha - (theta + betha));
+        bool collide = 0.001>abs(alpha - (theta + betha));
         return collide;
     }
 
-    void draw(Shader *shaderProgram) {
+    /*
+      Função que responde às teclas pressionadas
+  */
+    void keyboard_reaction(int keys[1024]) {
+
+        if (keys[GLFW_KEY_UP] == 1) {
+            do_a_movement('e');
+        } else if (keys[GLFW_KEY_DOWN] == 1) {
+            do_a_movement('w');
+        } else if (keys[GLFW_KEY_LEFT] == 1) {
+            do_a_movement('n');
+        } else if (keys[GLFW_KEY_RIGHT] == 1) {
+            do_a_movement('s');
+        }
+    }
+
+    void do_a_movement(char a) {
+        if (a == 'n') {
+            if (this->lastTileSelectedRow > 0) {
+                this->matrixColors[this->lastTileSelectedRow][this->lastTileSelectedCol].isSelected = false;
+
+                this->lastTileSelectedRow = this->lastTileSelectedRow - 1;
+                this->lastTileSelectedCol = this->lastTileSelectedCol;
+
+                this->matrixColors[this->lastTileSelectedRow][this->lastTileSelectedCol].isSelected = true;
+            }
+        } else if (a == 's') {
+            if (this->lastTileSelectedRow < (numRows - 1)) {
+                this->matrixColors[this->lastTileSelectedRow][this->lastTileSelectedCol].isSelected = false;
+
+                this->lastTileSelectedRow = this->lastTileSelectedRow + 1;
+                this->lastTileSelectedCol = this->lastTileSelectedCol;
+
+                this->matrixColors[this->lastTileSelectedRow][this->lastTileSelectedCol].isSelected = true;
+            }
+        } else if (a == 'w') {
+            if (this->lastTileSelectedCol > 0 && this->lastTileSelectedRow < (numRows - 1)) {
+                this->matrixColors[this->lastTileSelectedRow][this->lastTileSelectedCol].isSelected = false;
+
+                this->lastTileSelectedRow = this->lastTileSelectedRow + 1;
+                this->lastTileSelectedCol = this->lastTileSelectedCol - 1;
+
+                this->matrixColors[this->lastTileSelectedRow][this->lastTileSelectedCol].isSelected = true;
+            }
+        } else if (a == 'e') {
+            if (this->lastTileSelectedCol < (numCols - 1) && this->lastTileSelectedRow > 0) {
+                this->matrixColors[this->lastTileSelectedRow][this->lastTileSelectedCol].isSelected = false;
+
+                this->lastTileSelectedRow = this->lastTileSelectedRow - 1;
+                this->lastTileSelectedCol = this->lastTileSelectedCol + 1;
+
+                this->matrixColors[this->lastTileSelectedRow][this->lastTileSelectedCol].isSelected = true;
+            }
+        }
+    }
+
+
+
+        void draw(Shader *shaderProgram) {
 
         // Define shaderProgram como o shader a ser utilizado
         shaderProgram->UseProgramShaders();
