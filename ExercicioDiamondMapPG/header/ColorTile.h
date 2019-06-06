@@ -50,11 +50,12 @@ public:
     float tileWidth, tileHeight;
     float numRows, numCols;
     float sum_heigth;
+    int lastTileSelectedCol, lastTileSelectedRow;
     glm::mat4 modelMatrix;
 
     VerticesObject* vertices;
 
-    Tile matrixColors[14][14]= {};
+    Tile matrixColors[ROWS][COLS]= {};
 
     ColorTiles(float tileWidth, float tileHeight,float numCols, float numRows)
     {
@@ -64,6 +65,9 @@ public:
         this->numRows = numRows;
         this->sum_heigth = numRows*tileHeight;
         this->modelMatrix = glm::mat4(1);
+        this-> lastTileSelectedCol = -1;
+        this-> lastTileSelectedRow = -1;
+
 
         this->setupVertices(tileWidth, tileHeight);
 
@@ -104,10 +108,10 @@ public:
         //diamond map projecao do click
 
 
-        double x = (double)xPos;
-        double y = ((double)yPos)- (((double)sum_heigth)/2.0);
-        double tw = (double)tileWidth;
-        double th = (double)tileHeight;
+        double x = (double) xPos;
+        double y = ((double) yPos) - (((double) sum_heigth) / 2.0);
+        double tw = (double) tileWidth;
+        double th = (double) tileHeight;
         double row = (((2.0 * y / th) + (2.0 * xPos / tw))) / 2.0;
         double col = (2.0 * xPos / tw) - row;
 
@@ -118,7 +122,7 @@ public:
 //        int columnClick = (int) round(col);
 
 
-        if(rowClick<0 || columnClick<0 || columnClick>=numCols || rowClick>=numRows)
+        if (rowClick < 0 || columnClick < 0 || columnClick >= numCols || rowClick >= numRows)
             return;
 
 
@@ -127,8 +131,9 @@ public:
         //float y0 = ((float)rowClick)*tileHeight/2.0f ;
 
         //diamond
-        float x0 = (float)(rowClick * (tileWidth/2.0f) + columnClick * (tileWidth/2.0f));
-        float y0 = (float)((rowClick-1) * (tileHeight/2.0f) - columnClick * (tileHeight/2.0f) + sum_heigth/2.0f);
+        float x0 = (float) (rowClick * (tileWidth / 2.0f) + columnClick * (tileWidth / 2.0f));
+        float y0 = (float) ((rowClick - 1) * (tileHeight / 2.0f) - columnClick * (tileHeight / 2.0f) +
+                            sum_heigth / 2.0f);
 
 
         //   _______B_______
@@ -141,85 +146,53 @@ public:
         //
         //left point
         float Ax = x0;
-        float Ay = y0 + tileHeight/2.0f;
+        float Ay = y0 + tileHeight / 2.0f;
 
         //top point
-        float Bx = x0 + tileWidth/2.0f;
+        float Bx = x0 + tileWidth / 2.0f;
         float By = y0;
 
         //bottom point
-        float Cx = x0 + tileWidth/2.0f;
+        float Cx = x0 + tileWidth / 2.0f;
         float Cy = y0 + tileHeight;
 
         //right point
         float Dx = x0 + tileWidth;
-        float Dy = y0 + tileHeight/2.0f;
+        float Dy = y0 + tileHeight / 2.0f;
 
         bool isClickValid = false;
 
-        if(DEBUG==1){
+        if (DEBUG == 1) {
             printf("\nxPos: %f", xPos);
             printf("\nyPos: %f", yPos);
             printf("\nRow: %d", rowClick);
             printf("\nColumn: %d\n", columnClick);
-            printf("\nx0: %f\n",x0);
-            printf("\ny0: %f\n",y0);
-            printf("\nleftPoint x %f",Ax);
-            printf("\nleftPoint y %f\n",Ay);
-            printf("\ntopPointX x %f",Bx);
-            printf("\ntopPointY y %f\n",By);
-            printf("\nbottomPointX x %f",Cx);
-            printf("\nbottomPointY y %f\n",Cy);
-            printf("\nrightPointX x %f",Dx);
-            printf("\nrightPointY y %f\n",Dy);
+            printf("\nx0: %f\n", x0);
+            printf("\ny0: %f\n", y0);
+            printf("\nleftPoint x %f", Ax);
+            printf("\nleftPoint y %f\n", Ay);
+            printf("\ntopPointX x %f", Bx);
+            printf("\ntopPointY y %f\n", By);
+            printf("\nbottomPointX x %f", Cx);
+            printf("\nbottomPointY y %f\n", Cy);
+            printf("\nrightPointX x %f", Dx);
+            printf("\nrightPointY y %f\n", Dy);
         }
-/*
-        if(xPos < Bx){
-            //testar lado da esquerda
-            if(DEBUG==1) printf("\nlado esquerda");
 
-            if(testPointCollision(Ax,Ay, Bx, By,  Cx, Cy, xPos, yPos)) {
-                if(DEBUG==1) printf("\nDEU BOM");
-                isClickValid =true;
-            } else {
-                if(DEBUG==1) printf("\nNAO DEU TAO BOM");
-                if(xPos<Bx  && yPos<Ay){
-                    //caminha p cima
-                    rowClick--;
-                    isClickValid =true;
-                }
-            }
-
-        } else{
-            //testar lado da direita
-            isClickValid =true;
-            if(DEBUG==1) printf("\nlado direita");
-            if(testPointCollision(Dx,Dy, Bx, By,  Cx, Cy, xPos, yPos)) {
-                if(DEBUG==1) printf("\nDEU BOM");
-            }else {
-                if(DEBUG==1) printf("\nNAO DEU TAO BOM");
-                if(xPos>Bx  && yPos<Dy){
-                    //caminha p cima e direita
-                    rowClick--;
-                    columnClick++;
-                }
-            }
-
-        }
-*/
-
-        if(testPointCollision(Ax,Ay, Bx, By,  Cx, Cy, xPos, yPos))
-            isClickValid=true;
+        if (testPointCollision(Ax, Ay, Bx, By, Cx, Cy, xPos, yPos))
+            isClickValid = true;
 
         if(isClickValid==true){
-            if(matrixColors[rowClick][columnClick].isVisible){
-                if (matrixColors[rowClick][columnClick].isSelected) {
-                    matrixColors[rowClick][columnClick].isSelected = false;
-                } else {
-                    matrixColors[rowClick][columnClick].isSelected = true;
+            if (matrixColors[rowClick][columnClick].isVisible) {
+                if (this->lastTileSelectedCol > -1
+                    && this->lastTileSelectedRow > -1) {
+                    this->matrixColors[lastTileSelectedRow][lastTileSelectedCol].isSelected = false;
                 }
-            }
 
+                    this->matrixColors[rowClick][columnClick].isSelected = true;
+                    this->lastTileSelectedRow = rowClick;
+                    this->lastTileSelectedCol = columnClick;
+            }
         }
     }
 
