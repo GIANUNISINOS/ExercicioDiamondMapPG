@@ -271,42 +271,57 @@ public:
         } 
 	}
 
+	void markLastTileSelected(bool flag){
+		this->matrixColors[this->lastTileSelectedRow][this->lastTileSelectedCol].isSelected = flag;
+	}
+
     void do_a_movement(int a) {
         if (a == DIRECTION_NO) {
             if (this->lastTileSelectedRow > 0) {
-                this->matrixColors[this->lastTileSelectedRow][this->lastTileSelectedCol].isSelected = false;
-
+                markAsTrueLastTileSelected(false);
                 this->lastTileSelectedRow = this->lastTileSelectedRow - 1;
                 this->lastTileSelectedCol = this->lastTileSelectedCol;
-
-                this->matrixColors[this->lastTileSelectedRow][this->lastTileSelectedCol].isSelected = true;
+                markAsTrueLastTileSelected(true);
             }
-        } else if (a == DIRECTION_SE) {
+        } 
+		else if (a == DIRECTION_SE) {
             if (this->lastTileSelectedRow > -1 && this->lastTileSelectedRow < (numRows - 1)) {
-                this->matrixColors[this->lastTileSelectedRow][this->lastTileSelectedCol].isSelected = false;
-
+                markAsTrueLastTileSelected(false);
                 this->lastTileSelectedRow = this->lastTileSelectedRow + 1;
                 this->lastTileSelectedCol = this->lastTileSelectedCol;
-
-                this->matrixColors[this->lastTileSelectedRow][this->lastTileSelectedCol].isSelected = true;
+                markAsTrueLastTileSelected(true);
             }
-        } else if (a == DIRECTION_S) {
+        } 
+		else if (a == DIRECTION_S) {
             if (this->lastTileSelectedCol > 0 && this->lastTileSelectedRow < (numRows - 1)) {
-                this->matrixColors[this->lastTileSelectedRow][this->lastTileSelectedCol].isSelected = false;
-
+                markAsTrueLastTileSelected(false);
                 this->lastTileSelectedRow = this->lastTileSelectedRow + 1;
                 this->lastTileSelectedCol = this->lastTileSelectedCol - 1;
-
-                this->matrixColors[this->lastTileSelectedRow][this->lastTileSelectedCol].isSelected = true;
+                markAsTrueLastTileSelected(true);
             }
-        } else if (a == DIRECTION_N) {
+        } 
+		else if (a == DIRECTION_N) {
             if (this->lastTileSelectedCol < (numCols - 1) && this->lastTileSelectedRow > 0) {
-                this->matrixColors[this->lastTileSelectedRow][this->lastTileSelectedCol].isSelected = false;
-
+                markAsTrueLastTileSelected(false);
                 this->lastTileSelectedRow = this->lastTileSelectedRow - 1;
                 this->lastTileSelectedCol = this->lastTileSelectedCol + 1;
-
-                this->matrixColors[this->lastTileSelectedRow][this->lastTileSelectedCol].isSelected = true;
+                markAsTrueLastTileSelected(true);
+            }
+        }
+		else if (a == DIRECTION_O) {
+            if (this->lastTileSelectedCol > 0 && this->lastTileSelectedRow > 0) {
+                markAsTrueLastTileSelected(false);
+                this->lastTileSelectedRow = this->lastTileSelectedRow - 1;
+                this->lastTileSelectedCol = this->lastTileSelectedCol - 1;
+				markAsTrueLastTileSelected(true);
+            }
+        }
+		else if (a == DIRECTION_E) {
+            if (this->lastTileSelectedRow < (numRows - 1) && this->lastTileSelectedCol < (numCols - 1) && this->lastTileSelectedRow > -1) {
+                markAsTrueLastTileSelected(false);
+                this->lastTileSelectedRow = this->lastTileSelectedRow + 1;
+                this->lastTileSelectedCol = this->lastTileSelectedCol + 1;
+                markAsTrueLastTileSelected(true);
             }
         }
     }
