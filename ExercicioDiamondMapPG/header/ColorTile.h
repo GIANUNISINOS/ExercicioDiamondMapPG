@@ -143,6 +143,23 @@ public:
         y = row*tileHeight;
     }
 
+    void calculoCliqueDiamond(float xPos, float yPos, int &row, int &col) {
+        double x = (double) xPos;
+        double y = ((double) yPos) - (((double) sum_tiles_heigth) / 2.0);
+        double tw = (double) tileWidth;
+        double th = (double) tileHeight;
+        double rowClick = (((2.0 * y / th) + (2.0 * x / tw))) / 2.0;
+        double columnClick = (2.0 * x / tw) - rowClick;
+
+        row = (int) rowClick;
+        col = (int) columnClick;
+    }
+
+    void calculoCliqueSlideMap(float xPos, float yPos, int &row, int &col) {
+        row = (int) (yPos / (tileHeight/2.0));
+        col = (int) ((xPos - (row * (tileWidth/2.0)))/tileWidth);
+    }
+
     void createMatrixColors(){
         for (int row = 0; row < numRows; row++) {
               for (int col = 0; col < numCols; col++) {
@@ -156,20 +173,9 @@ public:
     }
 
     void mouseMap(double xPos,double yPos) {
-        //slide map
-        //int rowClick = (int) (yPos / (tileHeight/2.0));
-        //int columnClick = (int) ((xPos - (rowClick * (tileWidth/2.0)))/tileWidth);
 
-        //diamond map projecao do click
-        double x = (double) xPos;
-        double y = ((double) yPos) - (((double) sum_tiles_heigth) / 2.0);
-        double tw = (double) tileWidth;
-        double th = (double) tileHeight;
-        double row = (((2.0 * y / th) + (2.0 * xPos / tw))) / 2.0;
-        double col = (2.0 * xPos / tw) - row;
-
-        int rowClick = (int) row;
-        int columnClick = (int) col;
+        int rowClick, columnClick;
+        calculoCliqueDiamond(xPos, yPos, rowClick, columnClick);
 
         if (rowClick < 0 || columnClick < 0 || columnClick >= numCols || rowClick >= numRows)
             return;
