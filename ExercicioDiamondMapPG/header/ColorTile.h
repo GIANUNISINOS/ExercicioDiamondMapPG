@@ -82,7 +82,7 @@ public:
 };
 
 
-class ColorTiles{
+class ColorTiles {
 public:
 
     float tileWidth, tileHeight;
@@ -91,20 +91,19 @@ public:
     int lastTileSelectedCol, lastTileSelectedRow;
     glm::mat4 modelMatrix;
 
-    VerticesObject* vertices;
+    VerticesObject *vertices;
 
-    Tile matrixColors[ROWS][COLS]= {};
+    Tile matrixColors[ROWS][COLS] = {};
 
-    ColorTiles(float tileWidth, float tileHeight,float numCols, float numRows)
-    {
+    ColorTiles(float tileWidth, float tileHeight, float numCols, float numRows) {
         this->tileWidth = tileWidth;
         this->numCols = numCols;
         this->tileHeight = tileHeight;
         this->numRows = numRows;
-        this->sum_tiles_heigth = numRows*tileHeight;
+        this->sum_tiles_heigth = numRows * tileHeight;
         this->modelMatrix = glm::mat4(1);
-        this-> lastTileSelectedCol = -1;
-        this-> lastTileSelectedRow = -1;
+        this->lastTileSelectedCol = -1;
+        this->lastTileSelectedRow = -1;
 
 
         this->setupVertices(tileWidth, tileHeight);
@@ -118,24 +117,30 @@ public:
         */
         float verticesCoordinates[] = {
                 // positions
-                width / 2.0f,   0.0f,           0.0f,	// TOP
-                width ,         height / 2.0f,  0.0f,	// RIGHT
-                width  / 2.0f,  height,         0.0f,	// BOTTOM
-                0.0f,           height / 2.0f,  0.0f	// LEFT
+                width / 2.0f, 0.0f, 0.0f,    // TOP
+                width, height / 2.0f, 0.0f,    // RIGHT
+                width / 2.0f, height, 0.0f,    // BOTTOM
+                0.0f, height / 2.0f, 0.0f    // LEFT
 
         };
 
         vertices = new VerticesObject(verticesCoordinates, 12);
     }
 
-    void calculoDesenhoDiamond(float &x, float &y, int row, int col){
-        x = row * (this->tileWidth/2.0f) + col * (this->tileWidth/2.0f);
-        y = row * (this->tileHeight/2.0f) - col * (this->tileHeight/2.0f) + this->sum_tiles_heigth/2.0f - (this->tileHeight/2.0f);
+    void calculoDesenhoDiamond(float &x, float &y, int row, int col) {
+        x = row * (this->tileWidth / 2.0f) + col * (this->tileWidth / 2.0f);
+        y = row * (this->tileHeight / 2.0f) - col * (this->tileHeight / 2.0f) + this->sum_tiles_heigth / 2.0f -
+            (this->tileHeight / 2.0f);
     }
 
-    void calculoDesenhoSlideMap(float &x, float &y, int row, int col){
-        x = ((float)col)*tileWidth  + ((float)row) *(tileWidth/2.0f) ;
-        y = ((float)row)*tileHeight/2.0f;
+    void calculoDesenhoSlideMap(float &x, float &y, int row, int col) {
+        x = ((float) col) * tileWidth + ((float) row) * (tileWidth / 2.0f);
+        y = ((float) row) * tileHeight / 2.0f;
+    }
+
+    void calculoDesenhoLinear(float &x, float &y, int row, int col) {
+        x = col*tileWidth;
+        y = row*tileHeight;
     }
 
     void createMatrixColors(){
@@ -169,9 +174,6 @@ public:
         if (rowClick < 0 || columnClick < 0 || columnClick >= numCols || rowClick >= numRows)
             return;
 
-        float x0,y0;
-        this->calculoDesenhoDiamond(x0,y0,row,col);
-
         Tile tile = matrixColors[rowClick][columnClick];
 
         bool isClickValid = false;
@@ -181,8 +183,6 @@ public:
             printf("\nyPos: %f", yPos);
             printf("\nRow: %d", rowClick);
             printf("\nColumn: %d\n", columnClick);
-            printf("\nx0: %f\n", x0);
-            printf("\ny0: %f\n", y0);
             printf("\nleftPoint x %f", tile.Ax);
             printf("\nleftPoint y %f\n", tile.Ay);
             printf("\ntopPointX x %f", tile.Bx);
@@ -356,19 +356,6 @@ public:
 
         for (int row = 0; row < numRows; row++) {
             for (int col = 0; col < numCols; col++) {
-
-                //linear
-                //float xi = col*tileWidth;
-                //float yi = row*tileHeight;
-
-                //slidemap
-                //float xi = col*tileWidth  + row *(tileWidth/2.0f) ;
-                //float yi = row*tileHeight/2.0f ;
-
-                //diamond map
-                //float xi = row * (tileWidth/2.0f) + col * (tileWidth/2.0f);
-                //float yi = (row-1) * (tileHeight/2.0f) - col * (tileHeight/2.0f) + sum_heigth/2.0f;
-
                 float xi,yi;
                 this->calculoDesenhoDiamond(xi,yi,row,col);
 
@@ -382,10 +369,8 @@ public:
                         GL_FALSE, glm::value_ptr(modelMatrix));
 
 
-
                 //seleciona o tile a ser desenhado
                 Tile tile = matrixColors[row][col];
-
 
                 if(!tile.isSelected){
                     glUniform3fv(
