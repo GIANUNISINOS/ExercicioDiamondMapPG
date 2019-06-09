@@ -109,7 +109,7 @@ public:
             }
     }
 
-    void testCliqueMouse(double xPos,double yPos) {
+    void mouseMap(double xPos,double yPos) {
         //slide map
         //int rowClick = (int) (yPos / (tileHeight/2.0));
         //int columnClick = (int) ((xPos - (rowClick * (tileWidth/2.0)))/tileWidth);
@@ -280,7 +280,6 @@ public:
             if (this->lastTileSelectedRow > 0) {
                 markLastTileSelected(false);
                 this->lastTileSelectedRow = this->lastTileSelectedRow - 1;
-                this->lastTileSelectedCol = this->lastTileSelectedCol;
                 markLastTileSelected(true);
             }
         }
@@ -288,14 +287,12 @@ public:
             if (this->lastTileSelectedRow > -1 && this->lastTileSelectedRow < (numRows - 1)) {
                 markLastTileSelected(false);
                 this->lastTileSelectedRow = this->lastTileSelectedRow + 1;
-                this->lastTileSelectedCol = this->lastTileSelectedCol;
                 markLastTileSelected(true);
             }
         }
         else if (a == DIRECTION_NE) {
             if (this->lastTileSelectedCol > -1 && this->lastTileSelectedCol < (numCols - 1)) {
                 markLastTileSelected(false);
-                this->lastTileSelectedRow = this->lastTileSelectedRow;
                 this->lastTileSelectedCol = this->lastTileSelectedCol + 1;
                 markLastTileSelected(true);
             }
@@ -303,7 +300,6 @@ public:
         else if (a == DIRECTION_SO) {
             if (this->lastTileSelectedCol > 0) {
                 markLastTileSelected(false);
-                this->lastTileSelectedRow = this->lastTileSelectedRow;
                 this->lastTileSelectedCol = this->lastTileSelectedCol- 1;
                 markLastTileSelected(true);
             }

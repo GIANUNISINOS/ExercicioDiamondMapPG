@@ -67,7 +67,7 @@ Define acoes do mouse
         ypos = HEIGHT * ypos / RESIZED_HEIGHT;
 
 
-        colorsTiles->testCliqueMouse(xpos,ypos);
+        colorsTiles->mouseMap(xpos,ypos);
     }
 }
 
